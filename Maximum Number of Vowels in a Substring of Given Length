@@ -1,0 +1,25 @@
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {number}
+ */
+var maxVowels = function(s, k) {
+  s = s.replaceAll('a', '*').replaceAll('e', '*').replaceAll('i', '*').replaceAll('o', '*').replaceAll('u', '*');
+  let currentString = s.slice(0, k);
+  let currentCount = k - currentString.split('*').join('').length;
+  let maxCount = currentCount;
+  for (let i = 1; i < s.length - k + 1; i++) {
+    let removeFirst = currentString.charAt(0);
+    let addLast = s.charAt(i + k - 1);
+    currentString = currentString.concat(addLast);
+    currentString = currentString.slice(1);
+    if (removeFirst === '*') {
+      currentCount--;
+    }
+    if (addLast === '*') {
+      currentCount++;
+    }
+    maxCount = Math.max(maxCount, currentCount);
+  }
+  return maxCount;
+};
